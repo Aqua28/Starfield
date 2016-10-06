@@ -2,10 +2,13 @@ Particle[] jelly;
 void setup()
 {
 	size(400, 400);
-	jelly = new Particle[20];
+	background(0);
+	jelly = new Particle[50];
 	for(int i = 0; i<jelly.length; i++){
-	jelly[i] = new NormalParticle(200, 200);
-	jelly[0] = new OddballParticle(300, 100);
+	jelly[i] = new NormalParticle();
+	jelly[0] = new OddballParticle(50, 100);
+	jelly[1] = new JumboParticle();
+	jelly[2] = new OddballParticle(230, 100);
 }
 }
 
@@ -22,30 +25,40 @@ class NormalParticle implements Particle
 	double myX;
 	double myY;
 	double dSpeed;
-	
 	double dAngle;
 	int myColor;
 
-	NormalParticle(int x, int y )
+	NormalParticle()
 	
 	{
-		myX = x;
-		myY= y;
-		dSpeed = (double)Math.random()*10;
-		dAngle = (double)Math.random()*(2*Math.PI);
-		myColor = color(250, 250, 250);
+		myX = 200;
+		myY= 200;
+		dSpeed = Math.random()*10;
+		dAngle = (Math.random()*(2*Math.PI));
+		myColor = color((int)(Math.random()*250), (int)(Math.random()*250), (int)(Math.random()*250), 80);
 
 	}
 
 		 public void move()
 		{
+			if(frameCount%4==0){
 			myX = myX + Math.cos(dAngle)*dSpeed;
 			myY = myY + Math.sin(dAngle)*dSpeed;
+		}
 		}
 
 		public void show()
 		{
-			ellipse((float)myX, (float)myY, 10, 10);
+			noStroke();
+			fill(myColor);
+			ellipse((float)myX, (float)myY, 5, 5);
+		}
+
+		void MousePressed()
+		{
+
+			myX = mouseX;
+			myY = mouseY;
 		}
 
 	
@@ -59,7 +72,7 @@ class OddballParticle implements Particle
 {
 	double myX;
 	double myY;
-	double dSpeed;
+	int dSpeed;
 	double dAngle;
 	int myColor;
 
@@ -68,25 +81,30 @@ class OddballParticle implements Particle
 	{
 		myX = x;
 		myY= y;
-		dSpeed = (double)Math.random()*10;
+		dSpeed = (int)Math.random()*10;
 		dAngle = (double)Math.random()*(2*Math.PI);
-		myColor = color(250, 250, 250);
+		myColor = color((int)(Math.random()*250), 250, (int)(Math.random()*250));
 
 	}
 
 		public void move()
 		{
-			myX = myX - Math.cos(dAngle)*dSpeed;
-			myY = myY - Math.sin(dAngle)*dSpeed;
+			myX = myX + (int)Math.cos(dAngle)*dSpeed;
+			myY = myY + (int)Math.sin(dAngle)*dSpeed;
 		}
 
-		public void show()
+		public void show()   
 		{
-			rect((float)myX, (float)myY, 10, 10);
+			fill(myColor);
+			ellipse((float)myX, (float)myY, 20, 20);
 		}
 }
-class JumboParticle //uses inheritance
+class JumboParticle extends NormalParticle
 {
-	//your code here
+	void show()
+	{
+	 	fill(myColor);
+		ellipse(100, 200, 30, 30);
+	} 
 }
 
