@@ -47,7 +47,7 @@ class NormalParticle implements Particle
 
 		 public void move()
 		{
-			if(frameCount%5==0){
+			if(frameCount%4==0){
 			myX = myX + Math.cos(dAngle)*dSpeed;
 			myY = myY + Math.sin(dAngle)*dSpeed;
 		}
